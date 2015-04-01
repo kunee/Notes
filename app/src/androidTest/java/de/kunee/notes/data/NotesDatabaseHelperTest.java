@@ -7,19 +7,19 @@ import android.test.AndroidTestCase;
 import java.util.HashSet;
 import java.util.Set;
 
-public class DatabaseHelperTest extends AndroidTestCase {
+public class NotesDatabaseHelperTest extends AndroidTestCase {
 
     @Override
     protected void setUp() throws Exception {
-        mContext.deleteDatabase(DatabaseHelper.DATABASE_NAME);
+        mContext.deleteDatabase(NotesDatabaseHelper.DATABASE_NAME);
     }
 
     public void testOnCreate() throws Exception {
-        SQLiteDatabase db = new DatabaseHelper(mContext).getWritableDatabase();
+        SQLiteDatabase db = new NotesDatabaseHelper(mContext).getWritableDatabase();
         assertTrue(db.isOpen());
 
         Set<String> tableNames = new HashSet<>();
-        tableNames.add(NotesContract.NoteEntry.TABLE_NAME);
+        tableNames.add(NotesContract.Notes.TABLE_NAME);
 
         Cursor cursor = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table'", null);
         assertTrue(cursor.moveToFirst());
@@ -29,9 +29,10 @@ public class DatabaseHelperTest extends AndroidTestCase {
         assertTrue("Tables missing", tableNames.isEmpty());
 
         Set<String> columnNames = new HashSet<>();
-        columnNames.add(NotesContract.NoteEntry.COLUMN_NOTE);
+        columnNames.add(NotesContract.Notes._ID);
+        columnNames.add(NotesContract.Notes.COLUMN_NOTE);
 
-        cursor = db.rawQuery(String.format("PRAGMA table_info(%s)", NotesContract.NoteEntry.TABLE_NAME), null);
+        cursor = db.rawQuery(String.format("PRAGMA table_info(%s)", NotesContract.Notes.TABLE_NAME), null);
         assertTrue(cursor.moveToFirst());
         int columnNameIndex = cursor.getColumnIndex("name");
         do {

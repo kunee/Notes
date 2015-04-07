@@ -13,8 +13,8 @@ public class NotesContract {
     public static final class Notes implements BaseColumns {
 
         // Database
-        static final String TABLE_NAME = "note";
-        static final String COLUMN_NOTE = "note";
+        public static final String TABLE_NAME = "note";
+        public static final String COLUMN_NOTE = "note";
 
         // Content Provider
         public static final String PATH = "notes";

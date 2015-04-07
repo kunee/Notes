@@ -34,7 +34,7 @@ public class NotesAdapter extends CursorAdapter {
         tv.setText(text);
     }
 
-    private String convertCursorToText(Cursor cursor) {
+    public String convertCursorToText(Cursor cursor) {
         int columnIndex = cursor.getColumnIndex(NotesContract.Notes.COLUMN_NOTE);
         return cursor.getString(columnIndex);
     }

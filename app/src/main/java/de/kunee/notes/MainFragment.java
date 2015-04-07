@@ -10,7 +10,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import de.kunee.notes.adapter.NotesAdapter;
 import de.kunee.notes.data.NotesContract;
@@ -40,6 +42,15 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
         ListView listView = (ListView) rootView.findViewById(R.id.fragment_main_listview);
         notesAdapter = new NotesAdapter(getActivity(), null, 0);
         listView.setAdapter(notesAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Cursor cursor = (Cursor) parent.getItemAtPosition(position);
+                if (cursor != null) {
+                    Toast.makeText(getActivity(), notesAdapter.convertCursorToText(cursor), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         return rootView;
     }

@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="AppTheme" parent="android:Theme.Material.Light">
+    <style name="AppTheme" parent="android:Theme.Material.Light.DarkActionBar">
         <item name="android:colorPrimary">@color/primary</item>
         <item name="android:colorPrimaryDark">@color/primary_dark</item>
-        <item name="android:colorBackground">@color/primary_light</item>
+        <!--<item name="android:colorBackground">@color/primary_light</item>-->
         <item name="android:navigationBarColor">@color/primary_darker</item>
-        <item name="android:textColor">@android:color/darker_gray</item>
-        <item name="android:textColorPrimary">@color/primary_light</item>
+        <!--<item name="android:textColor">@android:color/darker_gray</item>-->
+        <!--<item name="android:textColorPrimary">@color/primary_light</item>-->
         <item name="android:colorAccent">@color/accent</item>
     </style>
+
     <color name="primary">#8BC34A</color>
     <color name="primary_light">#F1F8E9</color>
     <color name="primary_dark">#689F38</color>

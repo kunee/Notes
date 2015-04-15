@@ -12,7 +12,7 @@ import android.text.TextUtils;
 public class NotesContentProvider extends ContentProvider {
 
     private static final int NOTES = 1;
-    private static final int NOTES_WITH_ID = 2;
+    private static final int NOTE_WITH_ID = 2;
     private static final UriMatcher uriMatcher = buildUriMatcher();
 
     private static UriMatcher buildUriMatcher() {
@@ -20,7 +20,7 @@ public class NotesContentProvider extends ContentProvider {
         String authority = NotesContract.CONTENT_AUTHORITY;
         String path = NotesContract.Notes.PATH;
         uriMatcher.addURI(authority, path, NOTES);
-        uriMatcher.addURI(authority, path + "/#", NOTES_WITH_ID);
+        uriMatcher.addURI(authority, path + "/#", NOTE_WITH_ID);
         return uriMatcher;
     }
 
@@ -39,7 +39,7 @@ public class NotesContentProvider extends ContentProvider {
         switch (match) {
             case NOTES:
                 return NotesContract.Notes.CONTENT_TYPE;
-            case NOTES_WITH_ID:
+            case NOTE_WITH_ID:
                 return NotesContract.Notes.CONTENT_ITEM_TYPE;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
@@ -55,7 +55,9 @@ public class NotesContentProvider extends ContentProvider {
             case NOTES:
                 if (TextUtils.isEmpty(sortOrder)) sortOrder = "_ID ASC";
                 break;
-            case NOTES_WITH_ID:
+            case NOTE_WITH_ID:
+                if (selection == null) selection = "";
+                if (!TextUtils.isEmpty(selection)) selection += " AND ";
                 selection = selection + "_ID = " + uri.getLastPathSegment();
                 break;
             default:
@@ -103,6 +105,7 @@ public class NotesContentProvider extends ContentProvider {
     public int delete(Uri uri, String selection, String[] selectionArgs) {
 
         int rowsDeleted = 0;
+        if (TextUtils.isEmpty(selection)) selection = "1";
         final int match = uriMatcher.match(uri);
         switch (match) {
             case NOTES:

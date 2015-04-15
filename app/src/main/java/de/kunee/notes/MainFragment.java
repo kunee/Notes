@@ -2,15 +2,20 @@ package de.kunee.notes;
 
 import android.app.Fragment;
 import android.app.LoaderManager;
+import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -49,6 +54,20 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
                 if (cursor != null) {
                     Toast.makeText(getActivity(), notesAdapter.convertCursorToText(cursor), Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+        final EditText editText = (EditText) rootView.findViewById(R.id.fragment_main_edittext);
+        Button submitButton = (Button) rootView.findViewById(R.id.fragment_main_submit);
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Editable text = editText.getText();
+                if (!TextUtils.isEmpty(text)) {
+                    ContentValues values = new ContentValues();
+                    values.put(NotesContract.Notes.COLUMN_NOTE, text.toString());
+                    getActivity().getContentResolver().insert(NotesContract.Notes.CONTENT_URI, values);
+                }
+                editText.setText(null);
             }
         });
 
